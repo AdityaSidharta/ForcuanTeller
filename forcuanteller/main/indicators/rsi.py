@@ -1,6 +1,6 @@
 import os
 import uuid
-
+import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from ta.momentum import RSIIndicator
@@ -37,7 +37,7 @@ class RSIInd(Indicator):
         if row.rsi.item() > self.indicator["high"]:
             sell_signal = {
                 "ticker": ticker,
-                "datetime": row.index.item(),
+                "datetime": row.Date,
                 "indicator": self.name,
                 "param": self.param,
                 "reason": "High RSI Value - currently at {:2f}%".format(int(row.rsi.item())),
@@ -46,7 +46,7 @@ class RSIInd(Indicator):
         elif (row.rsi.item() < self.indicator["high"]) and (previous_row.rsi.item() > self.indicator["high"]):
             sell_signal = {
                 "ticker": ticker,
-                "datetime": row.index.item(),
+                "datetime": row.Date,
                 "indicator": self.name,
                 "param": self.param,
                 "reason": "RSI Crossover High - previous at {:2f}& and currently at {:2f}%".format(
@@ -60,7 +60,7 @@ class RSIInd(Indicator):
         if row.rsi.item() < self.indicator["low"]:
             buy_signal = {
                 "ticker": ticker,
-                "datetime": row.index.item(),
+                "datetime": row.Date,
                 "indicator": self.name,
                 "param": self.param,
                 "reason": "Low RSI Value - currently at {:2f}%".format(int(row.rsi.item())),
@@ -69,7 +69,7 @@ class RSIInd(Indicator):
         elif (row.rsi.item() > self.indicator["low"]) and (previous_row.rsi.item() < self.indicator["low"]):
             buy_signal = {
                 "ticker": ticker,
-                "datetime": row.index.item(),
+                "datetime": row.Date,
                 "indicator": self.name,
                 "param": self.param,
                 "reason": "RSI Crossover Low - previous at {:2f}& and currently at {:2f}%".format(
@@ -85,6 +85,8 @@ class RSIInd(Indicator):
     def draw_image(self, input_df, ticker, run_id):
         sns.set()
         df = input_df.copy()
+        df['Date'] = pd.to_datetime(df['Date'])
+        df.index = pd.DatetimeIndex(df['Date'])
 
         fig, ax = plt.subplots(figsize=(20, 8), nrows=2, sharex=True)
 
@@ -100,10 +102,11 @@ class RSIInd(Indicator):
         ax[1].set_ylabel("")
         ax[1].set_xlabel("")
 
-        fig.autofmt_xdate()
-        plt.show()
+        ax[1].set_ylim(bottom=0, top=100)
 
-        filename = "{}_{}_{}_{}.png".format(ticker, self.name, run_id, str(uuid.uuid4())[:6])
+        fig.autofmt_xdate()
+
+        filename = "{}_{}_{}.png".format(ticker, self.name, run_id)
         filepath = os.path.join(transform_dir, filename)
         plt.savefig(filepath)
         return filepath

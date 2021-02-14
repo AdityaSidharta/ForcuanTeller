@@ -19,3 +19,25 @@ indicators:
 tickers:
   - MSFT
   - AAPL
+  - TME
+  - BABA
+  - RDS-B
+  - SE
+  - JD
+  - JPM
+  - BAC
+  - WMT
+  - MU
+  - AMD
+  - TSM
+  - GOOG
+  - AMZN
+  - FB
+  - MA
+  - V
+  - SQ
+  - PYPL
+  - NFLX
+  - TSLA
+  - EH
+  - NIO

@@ -1,6 +1,6 @@
 import os
 import uuid
-
+import pandas as pd
 import matplotlib.pyplot as plt
 import mplfinance as fplt
 import numpy as np
@@ -42,7 +42,7 @@ class MACDInd(Indicator):
         if (row.macd_diff.item() < 0) and (previous_row.macd_diff.item() > 0):
             sell_signal = {
                 "ticker": ticker,
-                "datetime": row.index.item(),
+                "datetime": row.Date,
                 "indicator": self.name,
                 "param": self.param,
                 "reason": "MACD Downward Crossover",
@@ -54,7 +54,7 @@ class MACDInd(Indicator):
         if (previous_row.macd_diff.item() < 0) and (row.macd_diff.item() > 0):
             buy_signal = {
                 "ticker": ticker,
-                "datetime": row.index.item(),
+                "datetime": row.Date,
                 "indicator": self.name,
                 "param": self.param,
                 "reason": "MACD Upward Crossover",
@@ -68,6 +68,8 @@ class MACDInd(Indicator):
     def draw_image(self, input_df, ticker, run_id):
         sns.set()
         df = input_df.copy()
+        df['Date'] = pd.to_datetime(df['Date'])
+        df.index = pd.DatetimeIndex(df['Date'])
 
         colormat = np.where(df["macd_diff"] > 0, "g", "r")
         fig, ax = plt.subplots(figsize=(20, 8), nrows=2, sharex=True)
@@ -88,9 +90,8 @@ class MACDInd(Indicator):
         ax[1].legend()
 
         fig.autofmt_xdate()
-        plt.show()
 
-        filename = "{}_{}_{}_{}.png".format(ticker, self.name, run_id, str(uuid.uuid4())[:6])
+        filename = "{}_{}_{}.png".format(ticker, self.name, run_id)
         filepath = os.path.join(transform_dir, filename)
         plt.savefig(filepath)
         return filepath

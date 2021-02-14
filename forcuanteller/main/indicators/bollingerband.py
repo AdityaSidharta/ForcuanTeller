@@ -40,10 +40,10 @@ class BollingerBandInd(Indicator):
         if row.bb_bbhi.item():
             sell_signal = {
                 "ticker": ticker,
-                "datetime": row.index.item(),
+                "datetime": row.Date,
                 "indicator": self.name,
                 "param": self.param,
-                "reason": "High BollingerBand percentage - currently at {:2f}%".format(int(row.bb_bbp.item() * 100.0)),
+                "reason": "High BollingerBand percentage - currently at {}%".format(int(row.bb_bbp.item() * 100.0)),
                 "image": self.draw_image(df, ticker, run_id),
             }
         else:
@@ -52,10 +52,10 @@ class BollingerBandInd(Indicator):
         if row.bb_bbli.item():
             buy_signal = {
                 "ticker": ticker,
-                "datetime": row.index.item(),
+                "datetime": row.Date,
                 "indicator": self.name,
                 "param": self.param,
-                "reason": "Low BollingerBand percentage - currently at {:2f}%".format(int(row.bb_bbp.item() * 100.0)),
+                "reason": "Low BollingerBand percentage - currently at {}%".format(int(row.bb_bbp.item() * 100.0)),
                 "image": self.draw_image(df, ticker, run_id),
             }
         else:
@@ -77,7 +77,7 @@ class BollingerBandInd(Indicator):
         ax.set_ylabel("")
         ax.set_xlabel("")
 
-        filename = "{}_{}_{}_{}.png".format(ticker, self.name, run_id, str(uuid.uuid4())[:6])
+        filename = "{}_{}_{}.png".format(ticker, self.name, run_id)
         filepath = os.path.join(transform_dir, filename)
         plt.savefig(filepath)
         return filepath
