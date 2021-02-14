@@ -1,0 +1,21 @@
+schedule: 0 16 * * *
+interval: 1d
+period: 90d
+indicators:
+  - name: BollingerBandInd
+    window: 20
+    window_dev: 2
+    fillna: true
+  - name: RSIInd
+    window: 21
+    low: 20
+    high: 80
+    fillna: true
+  - name: MACDInd
+    window_slow: 26
+    window_fast: 12
+    window_sign: 9
+    fillna: true
+tickers:
+  - MSFT
+  - AAPL
