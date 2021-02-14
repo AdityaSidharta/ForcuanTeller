@@ -93,3 +93,4 @@ class MACDInd(Indicator):
         filename = "{}_{}_{}_{}.png".format(ticker, self.name, run_id, str(uuid.uuid4())[:6])
         filepath = os.path.join(transform_dir, filename)
         plt.savefig(filepath)
+        return filepath
