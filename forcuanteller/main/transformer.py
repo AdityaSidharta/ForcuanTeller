@@ -3,9 +3,7 @@ import os
 
 from forcuanteller.main.indicators.indicator import load_indicator
 from forcuanteller.main.utils.config import config
-from forcuanteller.main.utils.logger import logger
-from forcuanteller.main.utils.paths import report_dir, transform_dir
-from forcuanteller.main.utils.runner import runner
+from forcuanteller.main.utils.paths import transform_dir
 from forcuanteller.main.utils.ticker import load_ticker, get_available_tickers
 
 
@@ -31,4 +29,3 @@ def main(run_id):
 
     with open(filepath, "w+") as f:
         json.dump(reports, f)
-

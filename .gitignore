@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 .idea/
 forcuanteller/data
+.ipynb_checkpoints/
