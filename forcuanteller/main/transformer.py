@@ -10,18 +10,22 @@ from forcuanteller.main.utils.ticker import load_ticker, get_available_tickers
 def main(run_id):
     available_tickers = get_available_tickers(run_id)
     indicators_info = config.indicators
-    buy_signals = []
-    sell_signals = []
+    buy_signals = {}
+    sell_signals = {}
 
     for ticker in available_tickers:
         df = load_ticker(ticker, run_id)
+        ticker_buy_signals = []
+        ticker_sell_signals = []
         for indicator_info in indicators_info:
             indicator = load_indicator(indicator_info)
             buy_signal, sell_signal = indicator.get_signal(df, ticker, run_id)
             if buy_signal is not None:
-                buy_signals.append(buy_signal)
+                ticker_buy_signals.append(buy_signal)
             elif sell_signal is not None:
-                sell_signals.append(sell_signal)
+                ticker_sell_signals.append(sell_signal)
+        buy_signals[ticker] = ticker_buy_signals
+        sell_signals[ticker] = ticker_sell_signals
 
     reports = {"buy_signals": buy_signals, "sell_signals": sell_signals, "run_id": run_id}
     filename = "report_{}.json".format(run_id)
