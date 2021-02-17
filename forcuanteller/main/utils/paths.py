@@ -12,3 +12,4 @@ report_dir = os.path.join(data_dir, 'report')
 transform_dir = os.path.join(data_dir, 'transform')
 
 config_path = os.path.join(config_dir, 'config.yaml')
+template_path = os.path.join(notebook_dir, 'template.ipynb')

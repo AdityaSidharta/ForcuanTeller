@@ -3,6 +3,7 @@ import uuid
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from matplotlib.dates import WeekdayLocator
 from ta.momentum import RSIIndicator
 import mplfinance as fplt
 
@@ -103,6 +104,7 @@ class RSIInd(Indicator):
         ax[1].set_xlabel("")
 
         ax[1].set_ylim(bottom=0, top=100)
+        ax[1].xaxis.set_major_locator(WeekdayLocator())
 
         fig.autofmt_xdate()
 

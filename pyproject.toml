@@ -18,6 +18,8 @@ loguru = "^0.5.3"
 oyaml = "^1.0"
 plotly = "^4.14.3"
 mplfinance = "^0.12.7-alpha.5"
+papermill = "^2.3.2"
+nbconvert = "^6.0.7"
 
 [tool.poetry.dev-dependencies]
 

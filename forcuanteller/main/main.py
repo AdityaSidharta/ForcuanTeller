@@ -1,4 +1,4 @@
-from forcuanteller.main import loader, transformer
+from forcuanteller.main import loader, transformer, reporter
 from forcuanteller.main.utils.logger import logger
 from forcuanteller.main.utils.runner import runner
 

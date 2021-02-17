@@ -7,6 +7,7 @@ import numpy as np
 import seaborn as sns
 from ta.trend import MACD
 
+from matplotlib.dates import WeekdayLocator
 from forcuanteller.main.indicators.base import Indicator
 from forcuanteller.main.utils.paths import transform_dir
 
@@ -88,6 +89,8 @@ class MACDInd(Indicator):
         ax[1].set_xlabel("")
 
         ax[1].legend()
+
+        ax[1].xaxis.set_major_locator(WeekdayLocator())
 
         fig.autofmt_xdate()
 

@@ -31,7 +31,7 @@ def main(run_id):
             sell_signals[ticker] = ticker_sell_signals
 
     reports = {"buy_signals": buy_signals, "sell_signals": sell_signals, "run_id": run_id}
-    filename = "report_{}.json".format(run_id)
+    filename = "transform_{}.json".format(run_id)
     filepath = os.path.join(transform_dir, filename)
 
     with open(filepath, "w+") as f:
