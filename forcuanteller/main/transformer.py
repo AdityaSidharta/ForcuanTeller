@@ -24,8 +24,11 @@ def main(run_id):
                 ticker_buy_signals.append(buy_signal)
             elif sell_signal is not None:
                 ticker_sell_signals.append(sell_signal)
-        buy_signals[ticker] = ticker_buy_signals
-        sell_signals[ticker] = ticker_sell_signals
+
+        if ticker_buy_signals:
+            buy_signals[ticker] = ticker_buy_signals
+        if ticker_sell_signals:
+            sell_signals[ticker] = ticker_sell_signals
 
     reports = {"buy_signals": buy_signals, "sell_signals": sell_signals, "run_id": run_id}
     filename = "report_{}.json".format(run_id)
