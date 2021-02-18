@@ -20,6 +20,7 @@ plotly = "^4.14.3"
 mplfinance = "^0.12.7-alpha.5"
 papermill = "^2.3.2"
 nbconvert = "^6.0.7"
+yagmail = "^0.14.245"
 
 [tool.poetry.dev-dependencies]
 
