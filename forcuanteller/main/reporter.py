@@ -3,6 +3,8 @@ import json
 import os
 import subprocess
 
+from pdf2image import convert_from_path
+
 from forcuanteller.main.utils.paths import transform_dir, report_dir, template_path
 import papermill as pm
 
@@ -58,10 +60,16 @@ def generate_reports(run_id):
 
 
 def main(run_id):
-    filename = "report_{}.ipynb".format(run_id)
-    filepath = os.path.join(report_dir, filename)
+    filename = "report_{}".format(run_id)
+    filepath = os.path.join(report_dir, filename + '.ipynb')
 
     pm.execute_notebook(template_path, filepath, parameters={"run_id": run_id})
     subprocess.call(
-        "jupyter nbconvert --to html --TemplateExporter.exclude_input=True {}".format(filepath), shell=True
+        "jupyter nbconvert --to webpdf --no-input --allow-chromium-download {}".format(filepath), shell=True
     )
+    pdf_filepath = os.path.join(report_dir, filename + '.pdf')
+    jpg_filepath = os.path.join(report_dir, filename + '.jpg')
+
+    pages = convert_from_path(pdf_filepath, 100)
+    for page in pages:
+        page.save(jpg_filepath, 'JPEG')

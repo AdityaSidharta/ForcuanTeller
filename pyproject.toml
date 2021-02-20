@@ -21,6 +21,12 @@ mplfinance = "^0.12.7-alpha.5"
 papermill = "^2.3.2"
 nbconvert = "^6.0.7"
 yagmail = "^0.14.245"
+nb-clean = "^2.0.2"
+schedule = "^1.0.0"
+imgkit = "^1.0.2"
+pyppeteer = "^0.2.5"
+pdf2image = "^1.14.0"
+bumpversion = "^0.6.0"
 
 [tool.poetry.dev-dependencies]
 
