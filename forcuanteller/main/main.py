@@ -1,9 +1,12 @@
 from forcuanteller.main import loader, transformer, reporter, sender
+from forcuanteller.main.utils.config import config
 from forcuanteller.main.utils.gmail import validate_gmail
 from forcuanteller.main.utils.logger import logger
 from forcuanteller.main.utils.runner import runner
 import schedule
 import time
+
+from forcuanteller.main.utils.schedule import get_scheduler
 
 
 def task(sender_address, sender_password, receiver_address):
@@ -35,7 +38,9 @@ def main():
     validate_gmail(sender_address)
     validate_gmail(receiver_address)
 
-    schedule.every(60).seconds.do(
+    scheduler = get_scheduler(config.schedule)
+
+    scheduler.do(
         task, sender_address=sender_address, sender_password=sender_password, receiver_address=receiver_address
     )
     while True:
