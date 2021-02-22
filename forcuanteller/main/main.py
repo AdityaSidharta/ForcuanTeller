@@ -38,14 +38,17 @@ def main():
     validate_gmail(sender_address)
     validate_gmail(receiver_address)
 
-    scheduler = get_scheduler(config.schedule)
+    if config.schedule is None:
+        task(sender_address, sender_password, receiver_address)
+    else:
+        scheduler = get_scheduler(config.schedule)
 
-    scheduler.do(
-        task, sender_address=sender_address, sender_password=sender_password, receiver_address=receiver_address
-    )
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+        scheduler.do(
+            task, sender_address=sender_address, sender_password=sender_password, receiver_address=receiver_address
+        )
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
 
 
 if __name__ == "__main__":
